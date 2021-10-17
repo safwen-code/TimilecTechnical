@@ -1,0 +1,4 @@
+{
+    "mongoUri":"mongodb+srv://safwen:safwen123@cluster0-eyyjv.mongodb.net/grab?retryWrites=true&w=majority",
+    "safwenToken":"hhhhh"
+}
