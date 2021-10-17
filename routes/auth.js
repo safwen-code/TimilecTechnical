@@ -6,8 +6,15 @@ const config = require("config");
 const safwenToken = config.get("safwenToken");
 const { body, validationResult } = require("express-validator");
 const User = require("../models/User.js");
-router.get("/", (req, res) => {
-  res.send("hello from auth get user");
+const Auth = require("../Middelwares/auth/Auth.js");
+router.get("/", Auth, async (req, res) => {
+  try {
+    const user = await User.findById(req.user.id).select("-password");
+    res.json(user);
+  } catch (error) {
+    console.error(error.message)
+    res.status(500).send("server Eroor");
+  }
 });
 
 router.post(
