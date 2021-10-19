@@ -1,8 +1,15 @@
-import React from "react";
+import React, { useContext } from "react";
 import PropTypes from "prop-types";
 import { FcAddressBook, FcCellPhone } from "react-icons/fc";
-
+import ContactContext from "../../../context/contextContact/contactContext";
 const ContactItem = ({ contact: { id, name, email, phone, type } }) => {
+  const contactContext = useContext(ContactContext);
+  const { deleteContact } = contactContext;
+
+  const hundlerDelet = () => {
+    deleteContact(id);
+    console.log("delete id :", id);
+  };
   return (
     <div className="card bg-light  mb-3  " key={id}>
       <h6 className="text-dark pt-2 ms-2    ">
@@ -13,7 +20,6 @@ const ContactItem = ({ contact: { id, name, email, phone, type } }) => {
             "badge"  ${
               type === "profesional" ? " bg-secondary" : "bg-success"
             }  rounded-2 ps-1 pe-1`}
-            
         >
           {type.charAt(0).toUpperCase() + type.slice(1)}
         </span>
@@ -36,7 +42,11 @@ const ContactItem = ({ contact: { id, name, email, phone, type } }) => {
         <button className="btn btn-dark btn-sm" type="button">
           Edite
         </button>
-        <button className="btn btn-danger btn-sm" type="button">
+        <button
+          className="btn btn-danger btn-sm"
+          type="button"
+          onClick={hundlerDelet}
+        >
           {" "}
           Delete
         </button>
