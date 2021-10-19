@@ -7,7 +7,7 @@ const Contacts = (props) => {
   const { contacts } = contactContext;
   console.log("contacts", contacts);
   return (
-    <div className= "col align-self-end">
+    <div className= "d-flex align-items-end flex-column bd-highlight mt-3  ">
       {contacts.map((contact) => (
         <ContactItem contact={contact} key={contact.id} />
       ))}
