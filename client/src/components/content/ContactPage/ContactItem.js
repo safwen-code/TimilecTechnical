@@ -2,13 +2,14 @@ import React, { useContext } from "react";
 import PropTypes from "prop-types";
 import { FcAddressBook, FcCellPhone } from "react-icons/fc";
 import ContactContext from "../../../context/contextContact/contactContext";
-const ContactItem = ({ contact: { id, name, email, phone, type } }) => {
+const ContactItem = ({ contact }) => {
   const contactContext = useContext(ContactContext);
-  const { deleteContact } = contactContext;
-
-  const hundlerDelet = () => {
+  const { deleteContact, setCurrrentUser, clearCurrentUser } = contactContext;
+  const { id, name, email, phone, type } = contact;
+  const HundelDelet = () => {
     deleteContact(id);
     console.log("delete id :", id);
+    clearCurrentUser();
   };
   return (
     <div className="card bg-light  mb-3  " key={id}>
@@ -39,13 +40,17 @@ const ContactItem = ({ contact: { id, name, email, phone, type } }) => {
         )}
       </ul>
       <p className="lead ms-2">
-        <button className="btn btn-dark btn-sm" type="button">
+        <button
+          className="btn btn-dark btn-sm"
+          type="button"
+          onClick={() => setCurrrentUser(contact)}
+        >
           Edite
         </button>
         <button
           className="btn btn-danger btn-sm"
           type="button"
-          onClick={hundlerDelet}
+          onClick={HundelDelet}
         >
           {" "}
           Delete
