@@ -1,17 +1,28 @@
-import React, { useContext } from "react";
+import React, { Fragment, useContext } from "react";
 import PropTypes from "prop-types";
 import ContactItem from "./ContactItem.js";
 import ContactContext from "../../../context/contextContact/contactContext";
 const Contacts = (props) => {
   const contactContext = useContext(ContactContext);
-  const { contacts } = contactContext;
+  const { contacts, filter } = contactContext;
   console.log("contacts", contacts);
+  if (contacts.length === 0) {
+    return <div> Add contact please</div>;
+  }
   return (
-    <div className= "d-flex align-items-end flex-column bd-highlight mt-3  ">
-      {contacts.map((contact) => (
-        <ContactItem contact={contact} key={contact.id} />
-      ))}
-    </div>
+    <Fragment>
+      {filter !== null ? (
+        filter.map((contact) => (
+          <ContactItem contact={contact} key={contact.id} />
+        ))
+      ) : (
+        <div className="  ">
+          {contacts.map((contact) => (
+            <ContactItem contact={contact} key={contact.id} />
+          ))}
+        </div>
+      )}
+    </Fragment>
   );
 };
 

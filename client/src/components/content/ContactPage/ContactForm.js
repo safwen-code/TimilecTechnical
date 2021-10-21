@@ -34,7 +34,7 @@ const ContactForm = (props) => {
     } else {
       addContact(Form);
     }
-    clearAll()
+    clearAll();
   };
   const clearAll = () => {
     clearCurrentUser();
