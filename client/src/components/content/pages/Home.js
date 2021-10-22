@@ -1,14 +1,25 @@
-import React from "react";
-import PropTypes from "prop-types";
+import React, { useContext, useEffect } from "react";
+import Contacts from "../ContactPage/Contacts";
+import ContactForm from "../ContactPage/ContactForm";
+import ContactFiltred from "../ContactPage/ContactFiltred";
+import AuthContext from "../../../context/ContextAuth/AuthContext";
 
-const home = () => {
+const Home = () => {
+  const authContext = useContext(AuthContext);
+  const { LoadUser } = authContext;
+  useEffect(() => {
+    LoadUser();
+    //eslint-disable-next-line
+  }, []);
   return (
-    <div>
-      <h1>home Page</h1>
+    <div className="d-flex justify-content-between">
+      <ContactForm />
+      <div className="d-flex align-items-end flex-column bd-highlight mt-3">
+        <ContactFiltred />
+        <Contacts />
+      </div>
     </div>
   );
 };
 
-home.propTypes = {};
-
-export default home;
+export default Home;
