@@ -1,11 +1,12 @@
 import React, { useState, useContext, useEffect } from "react";
 import AlertContext from "../../../context/ContextAlert/AlertContext";
 import AuthContext from "../../../context/ContextAuth/AuthContext";
-const Register = () => {
+import { useHistory } from "react-router-dom";
+const Register = (props) => {
   const alertContext = useContext(AlertContext);
   const authContext = useContext(AuthContext);
   const { AddAlert } = alertContext;
-  const { registerUser, errors, ClearErrors } = authContext;
+  const { registerUser, errors, ClearErrors, isAUTH } = authContext;
 
   const [Forma, setForma] = useState({
     name: "",
@@ -13,18 +14,25 @@ const Register = () => {
     password: "",
     password2: "",
   });
+  let history = useHistory();
   useEffect(() => {
+    if (isAUTH) {
+      history.push("/");
+    }
     if (errors === "user All ready exist") {
       AddAlert(errors, "danger");
       ClearErrors();
     }
-  }, [errors]);
+    // eslint-disable-next-line
+  }, [errors, history, isAUTH]);
+
   const { name, email, password, password2 } = Forma;
 
   const hundlerChange = (e) => {
     console.log("hundelChange");
     setForma({ ...Forma, [e.target.name]: e.target.value });
   };
+  
   const hundlerSubmit = (e) => {
     e.preventDefault();
     registerUser({ name, email, password });
@@ -78,7 +86,7 @@ const Register = () => {
               </div>
               <div class="col">
                 <input
-                  type="password"
+                  type="text"
                   name="password2"
                   class="form-control"
                   placeholder="password2"
