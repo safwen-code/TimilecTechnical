@@ -12,3 +12,5 @@ export const LOGIN_FAIL = "LOGIN_FAIL";
 export const LOGOUT = "LOGOUT";
 export const CLEAR_ERRORS = "CLEAR_ERRORSz";
 export const LOAD_FAIL = "LOAD_FAIL"
+
+export const LOG_OUT = "LOG_OUT"

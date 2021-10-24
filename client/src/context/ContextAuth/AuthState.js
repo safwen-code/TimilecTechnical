@@ -3,16 +3,16 @@ import {
   FAIL_REGISTER,
   USER_LOADED,
   LOAD_FAIL,
-  AUTH_ERROR,
   LOGIN_SUCCESS,
   LOGIN_FAIL,
-  LOGOUT,
   CLEAR_ERRORS,
+  LOG_OUT,
 } from "./Type.js";
 import AuthContext from "./AuthContext";
 import AuthReducer from "./AuthReducer";
 import { useReducer } from "react";
 import axios from "axios";
+import setAuthToken from "../../utils/setAuthToken";
 
 const AuthState = ({ children }) => {
   const initialState = {
@@ -36,6 +36,7 @@ const AuthState = ({ children }) => {
       const res = await axios.post("/users/", forma, config);
       console.log("register User", res.data);
       dispatch({ type: REGISTER_SUCCESS, payload: res.data });
+      LoadUser();
     } catch (err) {
       dispatch({ type: FAIL_REGISTER, payload: err.response.data.msg });
     }
@@ -43,6 +44,9 @@ const AuthState = ({ children }) => {
   //Load User
   const LoadUser = async () => {
     //to do get the token from the headers
+    if (localStorage.token) {
+      setAuthToken(localStorage.token);
+    }
     try {
       const res = await axios.get("/auth");
       dispatch({
@@ -54,9 +58,25 @@ const AuthState = ({ children }) => {
     }
   };
   //Login User
-  const LogUser = () => console.log("login user");
+  const LogUser = async (Forma) => {
+    try {
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      };
+      const res = await axios.post("/auth", Forma, config);
+      console.log("resultat de login user", res.data);
+      dispatch({ type: LOGIN_SUCCESS, payload: res.data });
+      LoadUser();
+    } catch (err) {
+      dispatch({ type: LOGIN_FAIL, payload: err.response.data.msg });
+    }
+  };
   //Logout
-  const LogOut = () => console.log("logOut User");
+  const LogOut = () => {
+    dispatch({ type: LOG_OUT });
+  };
   //Clear errors
   const ClearErrors = () => {
     dispatch({ type: CLEAR_ERRORS });
@@ -73,7 +93,7 @@ const AuthState = ({ children }) => {
         LogUser,
         LogOut,
         ClearErrors,
-        LoadUser
+        LoadUser,
       }}
     >
       {children}
