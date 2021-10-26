@@ -15,17 +15,8 @@
 //       });
 //     }
 //   }, [contactContext, current]);
-//   const [contact, setcontact] = useState({
-//     name: "",
-//     email: "",
-//     phone: "",
-//     type: "personel",
-//   });
+//  
 
-//   const { name, email, phone, type } = contact;
-//   const HundelChange = (e) => {
-//     setcontact({ ...contact, [e.target.name]: e.target.value });
-//   };
 //   const HundelClick = (e) => {
 //     e.preventDefault();
 //     if (current === null) {
