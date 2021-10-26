@@ -1,54 +1,48 @@
 import React, { Fragment, useState, useContext, useEffect } from "react";
-import PropTypes from "prop-types";
+
 import ContactContext from "../../../context/contextContact/contactContext";
 const ContactForm = (props) => {
   const contactContext = useContext(ContactContext);
-  const { addContact, updateContact, clearCurrentUser, current } =
+  const { current, addContact, setCurrrentContact, updateContact } =
     contactContext;
 
-  useEffect(() => {
-    if (current !== null) {
-      setForm(current);
-    } else {
-      setForm({
-        name: "",
-        email: "",
-        phone: "",
-        type: "personel",
-      });
-    }
-  }, [contactContext, current]);
-  const [Form, setForm] = useState({
+  
+
+  const [contact, setcontact] = useState({
     name: "",
     email: "",
-    phone: "",
     type: "personel",
+    phone: "",
   });
-  const { name, email, phone, type } = Form;
+  const { name, email, type, phone } = contact;
+
   const HundelChange = (e) => {
-    setForm({ ...Form, [e.target.name]: e.target.value });
+    setcontact({ ...contact, [e.target.name]: e.target.value });
   };
-  const HundelClick = () => {
-    if (current) {
-      updateContact(Form);
+  const HundelClick = (e) => {
+    e.preventDefault();
+    console.log(contact);
+    if (current === null) {
+      addContact(contact);
     } else {
-      addContact(Form);
+      updateContact(contact);
     }
     clearAll();
   };
   const clearAll = () => {
-    clearCurrentUser();
+    console.log("hello from clear errors");
+    setCurrrentContact();
   };
   return (
     <form className="mt-3 border border-dark pt-3 me-3">
       <h4> {current ? "Edite Technical" : "Add Technical"} </h4>
-      <div class="mb-3">
-        <label for="exampleFormControlInput1" class="form-label">
+      <div className="mb-3">
+        <label for="exampleFormControlInput1" className="form-label">
           name
         </label>
         <input
           type="text"
-          class="form-control"
+          className="form-control"
           id="exampleFormControlInput1"
           placeholder="name"
           name="name"
@@ -56,13 +50,13 @@ const ContactForm = (props) => {
           onChange={(e) => HundelChange(e)}
         />
       </div>
-      <div class="mb-3">
-        <label for="exampleFormControlInput1" class="form-label">
+      <div className="mb-3">
+        <label for="exampleFormControlInput1" className="form-label">
           email address
         </label>
         <input
           type="email"
-          class="form-control"
+          className="form-control"
           id="exampleFormControlInput1"
           placeholder="email"
           name="email"
@@ -70,13 +64,13 @@ const ContactForm = (props) => {
           onChange={(e) => HundelChange(e)}
         />
       </div>
-      <div class="mb-3">
-        <label for="exampleFormControlInput1" class="form-label">
+      <div className="mb-3">
+        <label for="exampleFormControlInput1" className="form-label">
           phone
         </label>
         <input
           type="text"
-          class="form-control"
+          className="form-control"
           id="exampleFormControlInput1"
           placeholder="phone"
           name="phone"
@@ -86,9 +80,9 @@ const ContactForm = (props) => {
       </div>
       <h5>Contact Type</h5>
       <Fragment>
-        <div class="form-check">
+        <div className="form-check">
           <input
-            class="form-check-input"
+            className="form-check-input"
             type="checkbox"
             id="flexCheckDefault"
             name="type"
@@ -97,13 +91,13 @@ const ContactForm = (props) => {
             onChange={(e) => HundelChange(e)}
           />
 
-          <label class="form-check-label" for="flexCheckDefault">
+          <label className="form-check-label" for="flexCheckDefault">
             Personel
           </label>
         </div>
-        <div class="form-check">
+        <div className="form-check">
           <input
-            class="form-check-input"
+            className="form-check-input"
             type="checkbox"
             id="flexCheckChecked"
             name="type"
@@ -112,7 +106,7 @@ const ContactForm = (props) => {
             onChange={(e) => HundelChange(e)}
           />
 
-          <label class="form-check-label" for="flexCheckChecked">
+          <label className="form-check-label" for="flexCheckChecked">
             profesional
           </label>
         </div>
@@ -120,8 +114,8 @@ const ContactForm = (props) => {
       <div>
         <button
           type="button"
-          class="btn btn-secondary"
-          onClick={() => HundelClick()}
+          className="btn btn-secondary"
+          onClick={(e) => HundelClick(e)}
         >
           {current ? "Edite " : "Add "}
         </button>

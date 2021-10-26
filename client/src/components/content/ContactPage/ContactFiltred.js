@@ -9,7 +9,7 @@ const ContactFiltred = () => {
     if (filter === null) {
       text.current.valueOf = "";
     }
-  }, []);
+  }, [filter]);
   const hundelFiltred = (e) => {
     if (text.current.valueof !== "") {
       filtredContact(e.target.value);

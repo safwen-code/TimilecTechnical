@@ -4,20 +4,22 @@ import { FcAddressBook, FcCellPhone } from "react-icons/fc";
 import ContactContext from "../../../context/contextContact/contactContext";
 const ContactItem = ({ contact }) => {
   const contactContext = useContext(ContactContext);
-  const { deleteContact, setCurrrentUser, clearCurrentUser } = contactContext;
-  const { id, name, email, phone, type } = contact;
+  const { deleteContact, setCurrrentContact, clearCurrentContact } =
+    contactContext;
+  const { _id, name, email, phone, type } = contact;
+  console.log("from contact item", contact);
   const HundelDelet = () => {
-    deleteContact(id);
-    console.log("delete id :", id);
-    clearCurrentUser();
+    deleteContact(_id);
+    console.log("delete id :", _id);
+    clearCurrentContact();
   };
   return (
-    <div className="card bg-light  mb-3  " key={id}>
+    <div className="card bg-light  mb-3  ">
       <h6 className="text-dark pt-2 ms-2    ">
         {name}
         {"  "}
         <span
-          class={`
+          className={`
             "badge"  ${
               type === "profesional" ? " bg-secondary" : "bg-success"
             }  rounded-2 ps-1 pe-1`}
@@ -43,7 +45,7 @@ const ContactItem = ({ contact }) => {
         <button
           className="btn btn-dark btn-sm"
           type="button"
-          onClick={() => setCurrrentUser(contact)}
+          onClick={() => setCurrrentContact(contact)}
         >
           Edite
         </button>
