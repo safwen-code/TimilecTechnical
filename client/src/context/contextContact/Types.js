@@ -8,3 +8,5 @@ export const CLEAR_FILTER = "CLEAR_FILTER";
 export const SET_ALERT = "SET_ALERT";
 export const REMOVE_ALERT = "REMOVE_ALERT";
 export const ADD_CONTACT = "ADD_CONTACT"
+export const ERR_CONTACT = 'ERR_CONTACT'
+export const CLEAR_CONTACTS ="CLEAR_CONTACTS"
