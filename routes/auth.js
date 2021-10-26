@@ -32,7 +32,7 @@ router.post(
     try {
       let user = await User.findOne({ email });
       if (!user) {
-        return res.status(404).json({ msg: "invalid Credential" });
+        return res.status(404).json({ msg: "invalid password" });
       }
 
       // match password
@@ -40,7 +40,7 @@ router.post(
       if (!isMatch) {
         return res
           .status(400)
-          .json({ errors: [{ msg: "invalid password please check yr mind" }] });
+          .json({ errors: [{ msg: "invalid password" }] });
       }
 
       //send jwt

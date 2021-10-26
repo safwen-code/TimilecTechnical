@@ -37,7 +37,7 @@ router.post(
       });
       console.log("newContact", newContact);
       await newContact.save();
-      return res.status(200).json(newContact)
+      return res.status(200).json(newContact);
     } catch (error) {
       console.error(error.message);
       res.status(500).send("Server Error");
@@ -45,11 +45,42 @@ router.post(
   }
 );
 
-router.put("/:id", (req, res) => {
-  res.send("hello from update contact");
+router.put("/:id", Auth, async (req, res) => {
+  try {
+    console.log(req.user);
+    const { name, email, phone, type } = req.body;
+
+    let contact = await Contact.findByIdAndUpdate(req.params.id, {
+      $set: { ...req.body },
+    });
+    await contact.save();
+    console.log(contact);
+    res.status(200).json(contact);
+  } catch (error) {
+    console.error(error.message);
+    res.status(500).json(error.message);
+  }
 });
 
-router.delete("/:id", (req, res) => {
+router.delete("/:id", Auth, async (req, res) => {
+  console.log(req.user);
+  console.log(req.params.id);
+  try {
+    let contact = await Contact.findById(req.params.id);
+    console.log(contact);
+    if (!contact) {
+      res.status(400).json({ msg: `no contact with this ${req.params.id}` });
+    }
+    if (req.user.id !== contact.user.toString()) {
+      res.status(404).json({ msg: " no authorization " });
+    }
+
+    await contact.remove();
+    res.status(200).json({ msg: " contact is removed", contact });
+  } catch (error) {
+    console.log(error.message);
+    res.status(500).json("server error");
+  }
   res.send("hello from delete contact");
 });
 
