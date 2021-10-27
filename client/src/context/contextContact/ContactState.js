@@ -56,10 +56,11 @@ const ContactState = ({ children }) => {
       dispatch({ type: ERR_CONTACT, payload: error.response.msg });
     }
   };
+
   //delete contact
   const deleteContact = async (id) => {
     try {
-      await axios.delete(`/contacts/:${id}`);
+      await axios.delete(`/contacts/${id}`);
       dispatch({ type: DELET_CONTACT, payload: id });
     } catch (error) {
       dispatch({ type: ERR_CONTACT, payload: error.response.msg });
@@ -78,7 +79,20 @@ const ContactState = ({ children }) => {
     dispatch({ type: CLEAR_CURRENT });
   };
   //update contact
-  const updateContact = (contact) => {
+  const updateContact = async (contact) => {
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
+    try {
+      let res = await axios.put(`/contacts/${contact._id}`, contact, config);
+      console.log("la res de update ", res.data);
+      dispatch({ type: UPDATE_CONTACT, payload: res.data });
+    } catch (err) {
+      console.error(err.msg);
+      dispatch({ type: ERR_CONTACT, payload: err.response.message });
+    }
     dispatch({ type: UPDATE_CONTACT, payload: contact });
   };
   //filter Contact
