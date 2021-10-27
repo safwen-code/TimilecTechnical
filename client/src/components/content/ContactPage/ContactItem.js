@@ -7,7 +7,7 @@ const ContactItem = ({ contact }) => {
   const { deleteContact, setCurrrentContact, clearCurrentContact } =
     contactContext;
   const { _id, name, email, phone, type } = contact;
-  console.log("from contact item", contact);
+  
   const HundelDelet = () => {
     deleteContact(_id);
     console.log("delete id :", _id);

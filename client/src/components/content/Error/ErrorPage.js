@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import colors from '../../../urtils/colors.js'
+import colors from '../../../utils/colors.js'
 const ErrorWrapper = styled.div`
   margin: 30px;
   display: flex;

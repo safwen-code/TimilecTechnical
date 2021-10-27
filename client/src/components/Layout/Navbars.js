@@ -1,19 +1,24 @@
 import React, { Fragment, useContext } from "react";
 import PropTypes from "prop-types";
-import { Link } from "react-router-dom";
-import { AiOutlineSchedule } from "react-icons/ai";
+import { Link, useHistory } from "react-router-dom";
+
 import AuthContext from "../../context/ContextAuth/AuthContext";
+import ContactContext from "../../context/contextContact/contactContext";
 import { FaUserInjured } from "react-icons/fa";
 import { TiExport } from "react-icons/ti";
-import { Redirect , useHistory} from "react-router-dom";
+import { AiOutlineSchedule } from "react-icons/ai";
+
 const Navbars = ({ titel, icon }) => {
-  const history=useHistory()
+  const history = useHistory();
   const authContext = useContext(AuthContext);
+  const contactContext = useContext(ContactContext);
   const { isAUTH, LogOut, user } = authContext;
+  const { clearContacts } = contactContext;
   const onLogOut = () => {
     LogOut();
+    clearContacts();
     if (isAUTH) {
-      history.push('/loginf')
+      history.push("/login");
     }
   };
   const authLinks = (
@@ -54,7 +59,7 @@ const Navbars = ({ titel, icon }) => {
   return (
     <nav class="navbar navbar-light bg-light">
       <div class="container-fluid">
-        <a class="navbar-brand" href="#">
+        <a class="navbar-brand" href="/">
           {icon}
           {"  "}
           {titel}

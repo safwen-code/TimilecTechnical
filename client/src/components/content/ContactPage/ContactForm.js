@@ -1,9 +1,9 @@
 import React, { Fragment, useState, useContext, useEffect } from "react";
-
+import { useHistory, withRouter } from "react-router-dom";
 import ContactContext from "../../../context/contextContact/contactContext";
-const ContactForm = (props) => {
+const ContactForm = () => {
   const contactContext = useContext(ContactContext);
-  const { current, addContact, setCurrrentContact, updateContact } =
+  const { current, addContact, clearCurrentContact, updateContact } =
     contactContext;
 
   const [contact, setcontact] = useState({
@@ -13,15 +13,31 @@ const ContactForm = (props) => {
     phone: "",
   });
   const { name, email, type, phone } = contact;
+  let history = useHistory();
 
-  const HundelChange = (e) => {
+  useEffect(() => {
+    if (current !== null) {
+      setcontact(current);
+    } else {
+      setcontact({
+        name: "",
+        email: "",
+        phone: "",
+        type: "personel",
+      });
+    }
+    //eslint-disable-next-line
+  }, [contactContext, current]);
+
+  function HundelChange(e) {
     setcontact({ ...contact, [e.target.name]: e.target.value });
-  };
+  }
   const HundelClick = (e) => {
     e.preventDefault();
     console.log(contact);
     if (current === null) {
       addContact(contact);
+      history.push("/");
     } else {
       updateContact(contact);
     }
@@ -29,8 +45,15 @@ const ContactForm = (props) => {
   };
   const clearAll = () => {
     console.log("hello from clear errors");
-    setCurrrentContact();
+    clearCurrentContact();
+    setcontact({
+      name: "",
+      email: "",
+      phone: "",
+      type: "personel",
+    });
   };
+
   return (
     <form className="mt-3 border border-dark pt-3 me-3">
       <h4> {current ? "Edite Technical" : "Add Technical"} </h4>
@@ -128,4 +151,4 @@ const ContactForm = (props) => {
 
 ContactForm.propTypes = {};
 
-export default ContactForm;
+export default withRouter(ContactForm);

@@ -50,7 +50,7 @@ const Login = () => {
                 email
               </label>
               <input
-                type="email"
+                type="text"
                 class="form-control"
                 name="email"
                 id="formGroupExampleInput"
@@ -65,7 +65,7 @@ const Login = () => {
               </label>
               <input
                 name="password"
-                type="password"
+                type="text"
                 class="form-control"
                 id="formGroupExampleInput2"
                 placeholder="email please"
