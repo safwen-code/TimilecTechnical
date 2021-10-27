@@ -52,10 +52,15 @@ router.put("/:id", Auth, async (req, res) => {
 
     let contact = await Contact.findByIdAndUpdate(req.params.id, {
       $set: { ...req.body },
+      $currentDate: { lastModified: true },
     });
+    if (req.user.id !== contact.user.toString()) {
+      res.status(404).json({ msg: "no authorization" });
+    }
     await contact.save();
-    console.log(contact);
-    res.status(200).json(contact);
+
+    let Contacts = await Contact.find();
+    res.status(200).json(Contacts);
   } catch (error) {
     console.error(error.message);
     res.status(500).json(error.message);
