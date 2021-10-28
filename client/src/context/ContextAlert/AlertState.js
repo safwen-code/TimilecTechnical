@@ -4,13 +4,12 @@ import { useReducer } from "react";
 import AlertReducer from "./AlertReducer";
 import { v4 as uuidv4 } from "uuid";
 
-const AlertState = ({ children }) => {
-  const initialState = {
-    alerts:[]
-  };
+const AlertState = (props) => {
+  const initialState = [];
+
   const [state, dispatch] = useReducer(AlertReducer, initialState);
 
-  const AddAlert = ( msg, type ) => {
+  const AddAlert = (msg, type) => {
     const id = uuidv4();
     dispatch({
       type: SET_ALERT,
@@ -23,11 +22,11 @@ const AlertState = ({ children }) => {
   return (
     <AlertContext.Provider
       value={{
-        alerts: state.alerts,
+        alerts: state,
         AddAlert,
       }}
     >
-      {children}
+      {props.children}
     </AlertContext.Provider>
   );
 };

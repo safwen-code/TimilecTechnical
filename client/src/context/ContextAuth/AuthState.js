@@ -17,7 +17,7 @@ import setAuthToken from "../../utils/setAuthToken";
 const AuthState = ({ children }) => {
   const initialState = {
     token: localStorage.getItem("token"),
-    isAUTH: null,
+    isAUTH: false,
     loading: false,
     errors: null,
     user: null,
@@ -70,7 +70,7 @@ const AuthState = ({ children }) => {
       dispatch({ type: LOGIN_SUCCESS, payload: res.data });
       LoadUser();
     } catch (err) {
-      dispatch({ type: LOGIN_FAIL, payload: err.response.data.msg });
+      dispatch({ type: LOGIN_FAIL, payload: err.response.msg });
     }
   };
   //Logout

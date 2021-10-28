@@ -55,7 +55,7 @@ router.put("/:id", Auth, async (req, res) => {
       $currentDate: { lastModified: true },
     });
     if (req.user.id !== contact.user.toString()) {
-      res.status(404).json({ msg: "no authorization" });
+     return res.status(404).json({ msg: "no authorization" });
     }
     await contact.save();
 
